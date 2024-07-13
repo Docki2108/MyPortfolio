@@ -5,6 +5,10 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_blurhash/flutter_blurhash.dart';
 import 'package:marquee/marquee.dart';
+import 'package:url_launcher/url_launcher_string.dart';
+import 'package:vadim_dum/widgets/project1_view_widget.dart';
+import 'package:vadim_dum/widgets/sections_widget.dart';
+import 'package:vadim_dum/widgets/techspec_widget.dart';
 
 import 'data/Models/Class_Project.dart';
 import 'data/texts.dart';
@@ -46,17 +50,26 @@ class _MyHomePageState extends State<MyHomePage> {
   bool isHovering1 = false;
   bool isHoveringContacts = false;
   bool isHoveringSea = false;
+  bool isHoveringim = false;
 
   final ScrollController _scrollController = ScrollController();
+  final ScrollController _scrollControllerTech = ScrollController();
 
   final GlobalKey key1 = GlobalKey();
+  final GlobalKey keyim = GlobalKey();
+  final GlobalKey keyTech = GlobalKey();
 
   void _scrollTo(GlobalKey key) {
     final context = key.currentContext;
     if (context != null) {
       Scrollable.ensureVisible(context,
-          duration: Duration(seconds: 1), curve: Curves.easeInOut);
+          duration: const Duration(seconds: 1), curve: Curves.easeInOut);
     }
+  }
+
+  @override
+  void initState() {
+    super.initState();
   }
 
   @override
@@ -108,142 +121,68 @@ class _MyHomePageState extends State<MyHomePage> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      InkWell(
-                        onTap: () => _scrollTo(key1),
-                        onHover: (hovering) {
-                          setState(() => isHovering1 = hovering);
-                        },
-                        child: AnimatedContainer(
-                          duration: const Duration(milliseconds: 200),
-                          curve: Curves.ease,
-                          decoration: BoxDecoration(
-                            color: isHovering1
-                                ? const Color.fromARGB(255, 255, 255, 255)
-                                : const Color.fromARGB(255, 0, 0, 0),
-                          ),
-                          child: Text(
-                            isHovering1 ? 'мои проекты' : '!н.е. с.м.о.т.р.и',
-                            style: TextStyle(
-                                fontSize: 90,
-                                color:
-                                    isHovering1 ? Colors.black : Colors.white),
-                          ),
-                        ),
-                      ),
-                      InkWell(
-                        onTap: () {},
-                        onHover: (hovering) {
-                          setState(() => isHovering = hovering);
-                        },
-                        child: AnimatedContainer(
-                          duration: const Duration(milliseconds: 200),
-                          curve: Curves.ease,
-                          decoration: BoxDecoration(
-                            color: isHovering
-                                ? const Color.fromARGB(255, 255, 255, 255)
-                                : const Color.fromARGB(255, 0, 0, 0),
-                          ),
-                          child: Text(
-                            isHovering ? 'мои стихи' : '!т.и.ш.е.',
-                            style: TextStyle(
-                                fontSize: 90,
-                                color:
-                                    isHovering ? Colors.black : Colors.white),
-                          ),
-                        ),
-                      ),
-                      InkWell(
-                        onTap: () {},
-                        onHover: (hovering) {
-                          setState(() => isHoveringContacts = hovering);
-                        },
-                        child: AnimatedContainer(
-                          duration: const Duration(milliseconds: 200),
-                          curve: Curves.ease,
-                          decoration: BoxDecoration(
-                            color: isHoveringContacts
-                                ? const Color.fromARGB(255, 255, 0, 0)
-                                : const Color.fromARGB(255, 0, 0, 0),
-                          ),
-                          child: const Text(
-                            'my контакты',
-                            style: TextStyle(fontSize: 25, color: Colors.white),
-                          ),
-                        ),
-                      ),
-                      InkWell(
-                        onTap: () {
-                          Navigator.pushNamed(context, '/sea');
-                        },
-                        onHover: (hovering) {
-                          setState(() => isHoveringSea = hovering);
-                        },
-                        child: AnimatedContainer(
-                          duration: const Duration(milliseconds: 200),
-                          curve: Curves.ease,
-                          decoration: BoxDecoration(
-                            color: isHoveringSea
-                                ? Color.fromARGB(255, 0, 179, 255)
-                                : Color.fromARGB(255, 91, 225, 255),
-                          ),
-                          child: const Text(
-                            'море',
-                            style: TextStyle(fontSize: 25, color: Colors.white),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+                sections_widget(
+                    _scrollTo,
+                    keyim,
+                    setState,
+                    isHoveringim,
+                    key1,
+                    isHovering1,
+                    keyTech,
+                    isHovering,
+                    isHoveringContacts,
+                    context,
+                    isHoveringSea),
                 Expanded(
                   child: SingleChildScrollView(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Row(
-                          children: [
-                            Stack(children: [
-                              Image.asset(
-                                'lib/data/myp2.jpg',
-                                height: 250,
-                                width: 250,
-                              ),
-                              SizedBox(
-                                height: 250,
-                                width: 250,
-                                child: Marquee(
-                                  text: no_evil,
-                                  style: const TextStyle(
-                                      fontFamily: "RubikMonoOne", fontSize: 80),
-                                  scrollAxis: Axis.horizontal,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  blankSpace: 20.0,
-                                  velocity: 200.0, //speed
-                                  pauseAfterRound: const Duration(seconds: 0),
-                                  startPadding: 100.0,
-                                  accelerationDuration:
-                                      const Duration(seconds: 0),
-                                  accelerationCurve: Curves.linear,
-                                  decelerationDuration:
-                                      const Duration(milliseconds: 0),
-                                  decelerationCurve: Curves.easeOut,
+                        Card(
+                          child: Row(
+                            children: [
+                              Stack(children: [
+                                Image.asset(
+                                  key: keyim,
+                                  'lib/data/pictures/myp2.jpg',
+                                  height: 500,
+                                  width: 500,
                                 ),
+                                SizedBox(
+                                  height: 250,
+                                  width: 250,
+                                  child: Marquee(
+                                    text: no_evil,
+                                    style: const TextStyle(
+                                        fontFamily: "RubikMonoOne",
+                                        fontSize: 80),
+                                    scrollAxis: Axis.horizontal,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    blankSpace: 20.0,
+                                    velocity: 200.0, //speed
+                                    pauseAfterRound: const Duration(seconds: 0),
+                                    startPadding: 100.0,
+                                    accelerationDuration:
+                                        const Duration(seconds: 0),
+                                    accelerationCurve: Curves.linear,
+                                    decelerationDuration:
+                                        const Duration(milliseconds: 0),
+                                    decelerationCurve: Curves.easeOut,
+                                  ),
+                                ),
+                              ]),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: const [
+                                  Text('Д У М И Л И Н'),
+                                  Text('Вадим Владиславович'),
+                                  Text('2003 г.р.'),
+                                  Text('РОССИЯ'),
+                                ],
                               ),
-                            ]),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: const [
-                                Text('Д У М И Л И Н'),
-                                Text('Вадим Владиславович'),
-                                Text('2003 г.р.'),
-                                Text('РОССИЯ'),
-                              ],
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                         const SizedBox(
                           height: 27,
@@ -255,18 +194,56 @@ class _MyHomePageState extends State<MyHomePage> {
                         const SizedBox(
                           height: 111,
                         ),
-                        SizedBox(
-                          height: 111,
+                        const Text('Проекты'),
+                        Row(
+                          children: [
+                            Text(
+                              key: key1,
+                              'Проекты',
+                              style: const TextStyle(
+                                  fontFamily: "RubikMonoOne", fontSize: 80),
+                            ),
+                            const Text('мои проекты'),
+                          ],
                         ),
-                        SizedBox(
-                          height: 111,
+                        const Text(''),
+                        project1_view_widget(),
+                        Row(
+                          children: [
+                            const Text(
+                              'Более подробно можно ознакомиться тут - ',
+                            ),
+                            InkWell(
+                              child: const Padding(
+                                padding: EdgeInsets.all(16.0),
+                                child: Text(
+                                  'GitHub',
+                                  style: TextStyle(
+                                    color: Colors.blue,
+                                    decoration: TextDecoration.underline,
+                                  ),
+                                ),
+                              ),
+                              onTap: () => launchUrlString(
+                                  'https://github.com/Docki2108'),
+                            ),
+                          ],
                         ),
-                        SizedBox(
-                          height: 400,
+                        const SizedBox(
+                          height: 111,
                         ),
                         Text(
-                          'Мои проекты, над которыми я работал тут',
-                          key: key1,
+                          key: keyTech,
+                          'Технические характеристики того, что я использую при работе',
+                          style: const TextStyle(
+                              fontFamily: "RubikMonoOne", fontSize: 36),
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        techspec(),
+                        const SizedBox(
+                          height: 111,
                         ),
                       ],
                     ),

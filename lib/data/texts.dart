@@ -30,7 +30,6 @@ GeekBrains
 Траектория будущего
 ''';
 
-
 // Expanded(
 //               child: Marquee(
 //                 text: no_evil,

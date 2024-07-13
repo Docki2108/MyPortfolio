@@ -17,6 +17,8 @@ dependencies:
   flutter_hooks: ^0.20.5
   flutter_blurhash: ^0.7.0
   animated_text_kit: ^4.2.2
+  dio: ^5.5.0+1
+  url_launcher: ^6.1.11
 
 dev_dependencies:
   flutter_test:
@@ -28,8 +30,25 @@ flutter:
   uses-material-design: true
 
   assets:
-    - lib/data/Asset3.png
-    - lib/data/myp2.jpg
+    - lib/data/pictures/myp2.jpg
+    - lib/data/pictures/kometa/db1.png
+    - lib/data/pictures/kometa/desk1.png
+    - lib/data/pictures/kometa/desk2.png
+    - lib/data/pictures/kometa/desk3.png
+    - lib/data/pictures/kometa/desk4.png
+    - lib/data/pictures/kometa/mob1.png
+    - lib/data/pictures/kometa/mob2.png
+    - lib/data/pictures/kometa/mob3.png
+    - lib/data/pictures/kometa/mob4.png
+    - lib/data/pictures/kometa/mob5.png
+    - lib/data/pictures/kometa/mob6.png
+    - lib/data/pictures/kometa/mob7.png
+    - lib/data/pictures/kometa/mob8.png
+    - lib/data/pictures/kometa/mob9.png
+    - lib/data/pictures/kometa/mob10.png
+    - lib/data/pictures/kometa/mob11.png
+    - lib/data/pictures/kometa/mob12.png
+    - lib/data/pictures/kometa/mob13.png
 
   fonts:
     - family: Caravan
